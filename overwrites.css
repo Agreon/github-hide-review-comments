@@ -1,0 +1,2 @@
+.file-header::before, .file-header::after { display: none }
+.file-header { display: flex; justify-content: space-between; align-items: center }
