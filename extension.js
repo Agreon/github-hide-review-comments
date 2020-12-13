@@ -4,7 +4,7 @@
  *  => An "show resolved orientieren"
  * - maybe on page load is better for performance
  */
-(async () => {
+async function execute() {
     let config = {};
 
     const setLabelStyleToggled = (label) => {
@@ -97,12 +97,16 @@
         for (let i = 0; i < commentContainers.length; i++) {
             try {
                 const containerHeader = commentContainers[i].querySelector(".file-header");
+
+                // js-inline-comments-container
                 const comment = commentContainers[i].querySelector(".review-comment");
 
+
                 // Already resolved
-                if(!comment) {
+                if (!comment) {
                     continue;
                 }
+
 
                 await createViewedButton(containerHeader, comment.id);
             } catch (e) {
@@ -118,9 +122,28 @@
         applyExtension(target);
     }));
 
-    for (const item of document.getElementsByClassName("TimelineItem-body")) {
+    const elementsToWatch = Array.from(document.getElementsByClassName("js-discussion"));
+
+    // Add optional reloaded containers
+    const itemContainer = document.getElementById("js-progressive-timeline-item-container");
+    if (itemContainer) {
+        elementsToWatch.push(itemContainer);
+    }
+
+    for (const item of elementsToWatch) {
         lineItemObserver.observe(item, { childList: true });
     }
 
     await applyExtension(document.body);
+
+
+};
+
+(async () => {
+    try {
+        await execute();
+    } catch (e) {
+        console.error(e);
+        throw e;
+    }
 })();
