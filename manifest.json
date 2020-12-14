@@ -1,7 +1,7 @@
 {
     "manifest_version": 2,
     "name": "github-hide-review-comments",
-    "version": "1.0.1",
+    "version": "1.0.3",
     "description": "Hide review comments on PRs",
     "content_scripts": [
         {

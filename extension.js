@@ -98,9 +98,7 @@ async function execute() {
             try {
                 const containerHeader = commentContainers[i].querySelector(".file-header");
 
-                // js-inline-comments-container
                 const comment = commentContainers[i].querySelector(".review-comment");
-
 
                 // Already resolved
                 if (!comment) {
@@ -122,7 +120,7 @@ async function execute() {
         applyExtension(target);
     }));
 
-    const elementsToWatch = Array.from(document.getElementsByClassName("js-discussion"));
+    const elementsToWatch = Array.from(document.getElementsByClassName("TimelineItem-body"));
 
     // Add optional reloaded containers
     const itemContainer = document.getElementById("js-progressive-timeline-item-container");
