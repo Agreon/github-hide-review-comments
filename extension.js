@@ -42,14 +42,15 @@ async function execute() {
     }
 
     const createViewedButton = async (header, id) => {
-        const existingButtion = header.querySelector(".hide-comment");
+        const existingButton = header.querySelector(".hide-comment");
         // Don't add the same button twice
-        if (existingButtion) {
+        if (existingButton) {
             return;
             // TODO: rather use the existing input?
             // header.removeChild(existingButtion)
         }
 
+        header.className = header.className += " d-flex flex-justify-between"
 
         const wrapper = document.createElement("div");
         wrapper.className = "d-flex hide-comment";
@@ -70,6 +71,13 @@ async function execute() {
                 updateDomContent(header, label, input, true);
                 config[id] = true;
             }
+
+            const configKeys = Object.keys(config);
+            if(configKeys.length >= 512) {
+                console.debug("Deleting", configKeys[0]);
+                delete config[configKeys[0]];
+            }
+
             await browser.storage.sync.set(config);
         });
 
@@ -96,7 +104,7 @@ async function execute() {
 
         for (let i = 0; i < commentContainers.length; i++) {
             try {
-                const containerHeader = commentContainers[i].querySelector(".file-header");
+                const containerHeader = commentContainers[i].querySelector("summary");
 
                 const comment = commentContainers[i].querySelector(".review-comment");
 
@@ -104,7 +112,6 @@ async function execute() {
                 if (!comment) {
                     continue;
                 }
-
 
                 await createViewedButton(containerHeader, comment.id);
             } catch (e) {
